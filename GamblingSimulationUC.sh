@@ -4,23 +4,23 @@ Stake=100
 #counter for number of days
 no_of_days=0
 #counter for calculating the total amount won
-totaloAmountWon=0
+totalAmountWon=0
 #counter for calculating the total amount loss
 totalAmountLost=0
 #the amount gained or lost after every day gamble
-totalbalance=0
+totalBalance=0
 play()
 {
     echo $((RANDOM%2))
 }
 #Calculation of no of days
-while [ $no_of_days -lt 30 ]
+while [[ $no_of_days -lt 30 ]]
 do
-	no_of_days++
-	currentbalance=Stake
+	((no_of_days++))
+	currentBalance=Stake
 	WinPercentageAmount=$((Stake+ (Stake * 50/100)))
 	lostPercentageAmount=$((Stake- (Stake * 50/100)))
-    while [ $WinPercentageAmount -gt $currentBalance ] && [ $currentBalance -gt $lostPercentageamount ]
+    while [[ $WinPercentageAmount -gt $currentBalance && $currentBalance -gt $lostPercentageamount ]]
 	do
 		bet=$(play)
 		if [[ $bet == 1 ]]
@@ -32,11 +32,11 @@ do
 	done
 		if [ $currentBalance == $WinPresentageAmount ]
 		then
-                	totalBalance = $(($totalBalance + $currentBalance))
-                	totalAmountWon = $((totalAmountWon+50))
+                	totalBalance=$(($totalBalance + $currentBalance))
+                	totalAmountWon=$((totalAmountWon+50))
 		else
-                	totalBalance = $(($totalBalance + $currentBalance))
-                        totalAmountlost = $((totalAmountLost+50))
+                	totalBalance=$(($totalBalance+$currentBalance))
+                        totalAmountLost=$((totalAmountLost+50))
 		fi
 
             # displaying the won and lost ammount after 20 days
@@ -47,5 +47,5 @@ do
 	   	fi
 		done
 #printing the stake and result after 30 days of gambling
-echo"stake: " $Stake
+echo "Stake: " $Stake
 echo "current Balance avliable: " $totalBalance
