@@ -32,15 +32,15 @@ do
 	done
 		if [ $currentBalance == $WinPresentageAmount ]
 		then
-                	totalBalance += 100 + currentBalance
-                	totalAmountWon += 50
+                	totalBalance = $(($totalBalance + $currentBalance))
+                	totalAmountWon = $((totalAmountWon+50))
 		else
-                	totalBalance += currentBalance;
-                	totalAmountLost += 50;
+                	totalBalance = $(($totalBalance + $currentBalance))
+                        totalAmountlost = $((totalAmountLost+50))
 		fi
 
             # displaying the won and lost ammount after 20 days
-            	if [ numOfDaysGambled == 20 ]
+            	if [ $no_of_days -ge 20 ]
 	    	then
                 	echo "Total amount won after 20 days: "  $totalAmountWon
             		echo "Total amount lost after 20 days: " $totalAmountLost
@@ -48,4 +48,4 @@ do
 		done
 #printing the stake and result after 30 days of gambling
 echo"stake: " $Stake
-echo "current Balence avliable: " $totalBalance
+echo "current Balance avliable: " $totalBalance
