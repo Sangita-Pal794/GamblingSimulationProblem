@@ -10,7 +10,8 @@ totalAmountLost=0
 #the amount gained or lost after every day gamble
 totalbalance=0
 maxBetAmount=$((Stake+ (Stake * 50/100)))
-minBetAmount=$((Stake- (Stake * 50/100)))
+minBetAmount=$((Stake- (Stake * 50/100)
+totalBalance=0
 play()
 {
     echo $((RANDOM%2))
@@ -54,6 +55,16 @@ noofdayslost=0
         #calculate the amount per gamble gamble
         currentBalance = Stake
         while [ $maxBetAmount -gt $currentBalance && $currentBalance -gt $minBetAmount ] 
+
+#Calculation of no of days
+while [[ $no_of_days -lt 30 ]]
+do
+	((no_of_days++))
+	currentBalance=Stake
+	WinPercentageAmount=$((Stake+ (Stake * 50/100)))
+	lostPercentageAmount=$((Stake- (Stake * 50/100)))
+    while [[ $WinPercentageAmount -gt $currentBalance && $currentBalance -gt $lostPercentageamount ]]
+
 	do
             # calling the function within the if statement
             bet=$(play)
@@ -74,4 +85,29 @@ noofdayslost=0
             echo "Total amount won after " $numOfDaysGambled " days: " $totalCalculation($numOfDaysWon, 50, 0)
             echo "Total amount lost after " $numOfDaysGambled  " days: " $totalCalculation(numOfDaysLost, 50, 0)
         fi
-     }
+     
+		then
+			((CurrentBalance+=bet))
+		else
+			((CurrentBalance-=bet))
+		fi
+	done
+		if [ $currentBalance == $WinPresentageAmount ]
+		then
+                	totalBalance=$(($totalBalance + $currentBalance))
+                	totalAmountWon=$((totalAmountWon+50))
+		else
+                	totalBalance=$(($totalBalance+$currentBalance))
+                        totalAmountLost=$((totalAmountLost+50))
+		fi
+
+            # displaying the won and lost ammount after 20 days
+            	if [ $no_of_days -ge 20 ]
+	    	then
+                	echo "Total amount won after 20 days: "  $totalAmountWon
+            		echo "Total amount lost after 20 days: " $totalAmountLost
+	   	fi
+		done
+#printing the stake and result after 30 days of gambling
+echo "Stake: " $Stake
+echo "current Balance avliable: " $totalBalance
