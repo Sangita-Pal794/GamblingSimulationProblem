@@ -13,7 +13,7 @@ play()
 {
     echo $((RANDOM%2))
 }
-<<<<<<< HEAD
+
 #Start Playing
 while [ $Stake -ge 50 ] && [ $Stake -le 150 ]
 do
@@ -61,5 +61,5 @@ do
 	   	fi
 		done
 #printing the stake and result after 30 days of gambling
-echo"stake: " $Stake
+echo "stake: " $Stake
 echo "current Balence avliable: " $totalBalance
