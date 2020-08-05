@@ -1,51 +1,62 @@
 #!/bin/bash
-echo "echo Start Gambling With A Stake Of $100 every day and bet $1 in every game!!"
+
+echo "echo Start Gambling With A Stake Of 100 every day and bet 1 in every game!!"
+
+declare -A dailyAmount
+
 Stake=100
-#counter for number of days
-no_of_days=0
-#counter for calculating the total amount won
-totalAmountWon=0
-#counter for calculating the total amount loss
-totalAmountLost=0
-#the amount gained or lost after every day gamble
-totalBalance=0
-play()
-{
-    echo $((RANDOM%2))
-}
-#Calculation of no of days
-while [[ $no_of_days -lt 30 ]]
-do
-	((no_of_days++))
-	currentBalance=Stake
-	WinPercentageAmount=$((Stake+ (Stake * 50/100)))
-	lostPercentageAmount=$((Stake- (Stake * 50/100)))
-    while [[ $WinPercentageAmount -gt $currentBalance && $currentBalance -gt $lostPercentageamount ]]
+BET=1
+
+
+STAKE_PERCENTAGE=$(($((STAKE/100))*50))
+MAX_WIN=$((STAKE+STAKE_PERCENTAGE));
+MAX_LOSE=$((STAKE-STAKE_PERCENTAGE));
+MAX_DAYS=20;
+TOTAL_BET_AMT=$((STAKE*MAX_DAYS))
+
+totalPerDay=$((STAKE));
+finalAmt=0;
+
+dailyCalculation(){
+	while [[ $totalPerDay -lt $MAX_WIN && $totalPerDay -gt $MAX_LOSE ]]
 	do
-		bet=$(play)
-		if [[ $bet == 1 ]]
+		result=$(($RANDOM%2))
+		if [[ $result -eq 1 ]]
 		then
-			((CurrentBalance+=bet))
+			((totalPerDay++))
 		else
-			((CurrentBalance-=bet))
+			((totalPerDay--))
 		fi
 	done
-		if [ $currentBalance == $WinPresentageAmount ]
-		then
-                	totalBalance=$(($totalBalance + $currentBalance))
-                	totalAmountWon=$((totalAmountWon+50))
-		else
-                	totalBalance=$(($totalBalance+$currentBalance))
-                        totalAmountLost=$((totalAmountLost+50))
-		fi
+}
 
-            # displaying the won and lost ammount after 20 days
-            	if [ $no_of_days -ge 20 ]
-	    	then
-                	echo "Total amount won after 20 days: "  $totalAmountWon
-            		echo "Total amount lost after 20 days: " $totalAmountLost
-	   	fi
-		done
-#printing the stake and result after 30 days of gambling
-echo "Stake: " $Stake
-echo "current Balance avliable: " $totalBalance
+totalAmount(){
+	for (( day=1; day<=$MAX_DAYS; day++ ))
+	do
+		dailyCalculation
+		dailyAmount[$day]=$((totalPerDay))
+		finalAmt=$(($finalAmt+$totalPerDay))
+		totalPerDay=$((STAKE))
+	done
+}
+
+printDailyAmt(){
+	for ((day=1;day<=$MAX_DAYS;day++))
+	do
+		echo -e "Final Amount On Day" $day "\t" ${dailyAmount[$day]} "\n"
+	done
+}
+
+winOrLose(){
+	if [[ $finalAmt -gt $TOTAL_BET_AMT ]]
+	then
+		echo "AT THE END OF 20 DAYS, YOU WON $"$(($finalAmt-$TOTAL_BET_AMT))
+	else
+		echo "AT THE END OF 20 DAYS, YOU LOST $"$(($TOTAL_BET_AMT-$finalAmt))
+	fi
+}
+
+totalAmount
+printDailyAmt
+winOrLose
+
